@@ -1,0 +1,428 @@
+<!doctype html>
+<html>
+<head>
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, 
+            initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, 
+            user-scalable=no">
+<title>我是撸能手</title>
+<link href="favicon.ico" rel="icon" type="image/x-icon">
+<link rel="stylesheet" type="text/css" href="">
+<style type="text/css">
+body{padding:0; margin:0;}
+.lu{ width: 100%; height:100%; background:rgb(33,33,33);}
+.start_btn{ border:4px solid #eee;border-radius: 5px; width:7em; height:3em; position: absolute;top:0; bottom:0; left:0; right:0; margin:auto; color:#FFF; text-align: center;line-height: 3em; }
+.end_btn{ border:2px solid #FFF;border-radius: 5px; width:7em;  margin:auto; color:#FFF; text-align: center;line-height: 3em;  background: #333; margin-bottom: 1em; }
+.timecounting{font-size: 1em; color: #FFF; padding:1em;}
+.dialog{
+	position: absolute;top:0; bottom:0; left:0; right:0; margin:auto; width:15em; height:21em; background: #333; color: #FFF; text-align: center;border:4px solid #e44;border-radius: 5px;
+}
+.web_href{color:#fff;}
+.contact{font-size: 0.5em; color:#EEE;}
+.tieba_img{width:7em; }
+.hint{font-weight: bold;}
+.ready{
+border:2px solid #FFF;border-radius: 5px;line-height: 3em; 
+}
+.start_btn:click{border-color:#E88;}
+.info{
+	width: 100%; height:100%;
+	position: absolute;
+	z-index: 999;
+	background: #333;
+	opacity: 0.9;
+	color: #FFF;
+	font-weight: bold;
+	text-align: center;
+}
+
+.info_hint{	height:17em; position: absolute;top:0; bottom:0; left:0; right:0; margin:auto;
+}
+.info_hint p {margin:3em;}
+@keyframes hintAnimation
+{
+0% { top: 10%;}
+50% {top: 80%;}
+100% {top: 10%;}
+}
+@-o-keyframes hintAnimation
+{
+0% { top: 10%;}
+50% {top: 80%;}
+100% {top: 10%;}
+}
+@-webkit-keyframes hintAnimation
+{
+0% { top: 10%;}
+50% {top: 80%;}
+100% {top: 10%;}
+}
+@-moz-keyframes hintAnimation
+{
+0% { top: 10%;}
+50% {top: 80%;}
+100% {top: 10%;}
+}
+@keyframes wordTip
+{
+0% {color: #FFF;}
+50% {color: #FF0;}
+100% {color: #FFF;}
+}
+@-o-keyframes wordTip
+{
+0% {color: #FFF;}
+50% {color: #FF0;}
+100% {color: #FFF;}
+}
+@-moz-keyframes wordTip
+{
+0% {color: #FFF;}
+50% {color: #FF0;}
+100% {color: #FFF;}
+}
+@-webkit-keyframes wordTip
+{
+0% {color: #FFF;}
+50% {color: #FF0;}
+100% {color: #FFF;}
+}
+.info_hint_animation{  position:relative; margin:0 auto; width:1em; height:1em; border-radius: 1em; background: #EF0;
+	-moz-animation: hintAnimation 2s ease 0 infinite;
+	-webkit-animation: hintAnimation 2s ease 0 infinite;
+	-o-animation: hintAnimation 2s ease 0 infinite;
+	animation: hintAnimation 2s ease 0s infinite;
+}
+.info_hint p { 
+	
+	-moz-animation: wordTip 2s linear 0 infinite;
+	-webkit-animation: wordTip 2s linear 0 infinite;
+	-o-animation: wordTip 2s linear 0 infinite;
+	animation: wordTip 2s linear 0s infinite;
+}
+</style>
+ <script src="zepto.min.js"></script>
+</head>
+<body scoll=no>
+	<div id="container">
+		<div id="header"></div>
+		<div id="j_info" class="info">
+			<div class="info_hint_animation"></div>
+			<div class="info_hint"><p>上</p>
+			<p>用一个手指迅速地搓动屏幕,屏幕会变色哦</p><p>手指不要离开屏幕，直到一片白色</p>
+			<p>下</p>
+			<p class="ready">Are You Ready ?</p>
+		</div>
+		</div>
+		<div id="content">
+			<div id="j_lu" class="lu">
+				<div id="j_start_btn" class="start_btn">点击开始</div>
+				
+				<div id = "j_timecounting" class="timecounting">0</div>
+			</div>
+		</div>
+		<div id="footer"></div>
+	</div>
+	<script type="text/javascript">
+
+	//=============weixin
+		var imgUrl = "http://www.einino.net/lu/loser.png";
+        var lineLink = "http://www.einino.net/lu/index.html";
+        var descContent = '我是撸能手';
+        var shareTitle = '我是撸能手';
+        var appid = '';
+         
+        function shareFriend() {
+            WeixinJSBridge.invoke('sendAppMessage',{
+                "appid": appid,
+                "img_url": imgUrl,
+                "img_width": "200",
+                "img_height": "200",
+                "link": lineLink,
+                "desc": descContent,
+                "title": shareTitle
+            }, function(res) {
+                //_report('send_msg', res.err_msg);
+            })
+        }
+        function shareTimeline() {
+            WeixinJSBridge.invoke('shareTimeline',{
+                "img_url": imgUrl,
+                "img_width": "200",
+                "img_height": "200",
+                "link": lineLink,
+                "desc": descContent,
+                "title": shareTitle
+            }, function(res) {
+                   //_report('timeline', res.err_msg);
+            });
+        }
+        function shareWeibo() {
+            WeixinJSBridge.invoke('shareWeibo',{
+                "content": descContent,
+                "url": lineLink,
+            }, function(res) {
+                //_report('weibo', res.err_msg);
+            });
+        }
+        // 当微信内置浏览器完成内部初始化后会触发WeixinJSBridgeReady事件。
+        document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+            // 发送给好友
+            WeixinJSBridge.on('menu:share:appmessage', function(argv){
+                shareFriend();
+            });
+            // 分享到朋友圈
+            WeixinJSBridge.on('menu:share:timeline', function(argv){
+                shareTimeline();
+            });
+            // 分享到微博
+            WeixinJSBridge.on('menu:share:weibo', function(argv){
+                shareWeibo();
+            });
+        }, false);
+        /*
+			Web Game for WeiXin
+			@author Chen Jinya
+			@data 2014/09/5
+			@email jinyachen@gmail.com
+			Baidu.com
+
+			copyright @ 2014 Tieba FE Tech Group
+        */
+		var lu = function(){
+			this.init();
+		};
+		lu.prototype={
+			_length :0,
+			_x:0,
+			_y:0,
+			_color:[33,33,33],
+			init:function(){
+				this.windowWidth = $(document).width();
+				this.windowHeight = $(window).height();
+				this.body = $("#j_lu");
+				this.info = $("#j_info");
+				this.body.width(this.windowWidth);
+				this.info.width(this.windowWidth);
+				this.body.height(this.windowHeight);
+				this.info.height(this.windowHeight);
+				var self= this;
+				this._bindEvent();
+				
+				
+			},
+			_run:function(){
+				this._length = 0;
+				this._runTime = 0;
+				this._color = [33,33,33];
+				this._runFlag = true;
+				
+				var color = this._colorChange();
+				this.body.css("background",color);
+				var self = this;
+				setTimeout(function(){
+					self._timeCounting();
+					self._reduceDistance();
+				},100);
+				
+				
+			},
+			_runFlag:false,
+			_colorCount:0,
+			_runTime:0,
+			_flashLength:0,
+			_shareDesc:"我是撸能手",
+			_rank:["*撸神*","撸得还可以","撸得没有技巧","撸得不深刻","撸得不多","偶尔撸","也许撸过","没撸过","没有撸的天分"],
+			_end:function(){},
+			_bindEvent:function(){
+				var self = this;
+				$(document).bind('touchmove', function(e) {           
+				    e.preventDefault();  
+				});  
+				this.body.delegate("#j_start_btn","click",function(e){
+					self._run();
+					$(this).hide();
+				}).delegate("#j_re_start_btn","click",function(e){
+					self._run();
+					$("#j_dialog").remove();
+				}).delegate("#j_timeline_btn","click",function(e){
+
+					shareTimeline();
+				}).delegate("#j_pengyou_btn","click",function(e){
+					
+					shareFriend();
+				});
+				$("#j_info").click(function(e){
+					$(this).remove();
+				})
+				$("#j_lu").on("touchmove",function(e){
+					if(! self._runFlag) return;
+					var t = e.touches[0];
+					var d = self._getDistance(self._x,self._y,t.clientX,t.clientY);
+					self._length +=d;
+					self._flashLength = d;
+					var color = self._colorChange("up");
+					self.body.css("background",color);
+					self._x = t.clientX;
+					self._y = t.clientY;
+				}).on("touchend",function(e){
+					if(! self._runFlag) return;
+					var count =0;
+					for ( var i=0; i <3 ; i++){
+						count +=self._color[i];
+					}
+					self._endGame(count);
+				});
+
+			},
+			_timeCounting:function(){
+				var self =this;
+				var j_timecounting = $("#j_timecounting");
+				this._timeInterval = setInterval(function(){
+					self._runTime++;
+					j_timecounting.html(self._runTime);
+
+				},100);
+			},
+			_timeStop:function(){
+				
+			},
+			_endGame:function(c){
+				//$("#j_lu").off();
+				//console.log(c)
+				var r = this._success(c);
+				this._timeStop();
+				this._end();
+				this._runFlag = false;
+				
+				//console.log("end:",this._length);
+				this._shareDesc = "我用"+this._runTime/10+"秒，获得["+this._rank[r]+"]称号！";
+				descContent = this._shareDesc;
+				shareTitle = this._shareDesc;
+				clearInterval(this._reducInterval);
+				clearInterval(this._timeInterval);
+
+			},
+			_success:function(count){
+				if(count >= 765){
+					this._showDialog("<p>You are loser's God</p><p class='hint'>"+this._rank[0]+"</p>");
+					return 0;
+				}
+				else if(count > 700){
+					this._showDialog("<p>You are loser's Father </p><p class='hint'>"+this._rank[1]+"</p>");
+					return 1;
+				}
+				else if(count > 600){
+					this._showDialog("<p>You are loser's Mother </p><p class='hint'>"+this._rank[2]+"</p>");
+					return 2;
+				}
+				else if(count > 500){
+					this._showDialog("<p>You are loser's Brother</p><p class='hint'>"+this._rank[3]+"</p>");
+					return 3;
+				
+				}else if(count > 400){
+					this._showDialog("<p>You are loser's Sister</p><p class='hint'>"+this._rank[4]+"</p>");
+					return 4;
+				}
+				else if(count > 300){
+					this._showDialog("<p>You are loser's Friend</p><p class='hint'>"+this._rank[5]+"</p>");
+					return 5;
+				
+				}else if(count>200){
+					this._showDialog("<p>You are loser?</p><p class='hint'>"+this._rank[6]+"</p>");
+					return 6;
+				}
+				else if(count >100){
+					this._showDialog("<p>You are loser</p><p class='hint'>"+this._rank[7]+"</p>");
+					return 7;
+				}
+				else{
+					this._showDialog("<p>You are not Man</p><p class='hint'>"+this._rank[8]+"</p>");
+					return 8;
+				}
+				
+				
+			},
+			_showDialog:function(content){
+				var html = '<div id="j_dialog" class="dialog" >'+content+'<p>耗时'+this._runTime/10+'秒</p><div id="j_timeline_btn" class="end_btn">右上角分享</div><div id="j_re_start_btn" class="end_btn">重新开始</div><div><a class="web_href" href="http://tieba.baidu.com?tab=webgamelu"><img class="tieba_img" src="tieba.png" /></a></div><div><a href="http://www.chenjinya.cn" class="contact" >about</a></div></div>';
+				this.body.append(html);
+			},
+			_getDistance:function(_x,_y,__x,__y){
+				//console.log(Math.sqrt(Math.abs(Math.pow(_x-__x,2)+Math.pow(_y-__y,2))));
+				return Math.sqrt(Math.abs(Math.pow(_x-__x,2)+Math.pow(_y-__y,2)));
+
+			},
+			_reduceDistance:function(){
+				var self =this;
+				this._reducInterval = setInterval(function(){
+					var color = self._colorChange();
+					self.body.css("background",color);
+					//console.log("reduce:",color)
+					//console.log("last length",self._length)
+				},100);
+
+			},
+			_colorUp:function(i){
+				var count =(this._flashLength/20);
+				console.log("color up:",count)
+				if(this._color[i] < 255){
+					this._color[i] +=count;
+					if (this._color[i] > 255 ) this._color[i] = 255;
+					return true;
+				}
+				return false;
+			},
+			_colorDown:function(i){
+				var count =10;
+				if(this._color[i] > 0){
+					this._color[i] -=count;
+					if (this._color[i] < 0 ) this._color[i] = 0;
+					return true;
+				}
+				return false;
+
+			},
+			_colorChange:function(dre,init){
+				if(dre =="up"){
+					this._colorUp(0) ? this._colorUp(0):
+					this._colorUp(1) ? this._colorUp(1):
+					this._colorUp(2);
+				}else{
+					this._colorDown(0) ? this._colorDown(0):
+					this._colorDown(1) ? this._colorDown(1):
+					this._colorDown(2);
+				}
+				var count = 0;
+				console.log("color:",this._color,"length",this._length)
+				for (var i=0; i < 3 ; i++){
+					if(dre =="up"){
+						this._color[i] = Math.ceil(this._color[i]);}
+					else{
+						this._color[i] = Math.floor(this._color[i]);
+					}
+					count += this._color[i];
+				}
+				if( count == 765 ){
+					this._endGame(count);
+				}
+				if(init == 0){
+					return "rgb(33,33,33)";
+				}
+				return "rgb("+this._color.join(",")+")";
+					
+			}
+
+
+		};
+
+		new lu();
+		
+	</script>
+<div style="display:none;"><script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Fec68d4c362b675727eaae04e579ced28' type='text/javascript'%3E%3C/script%3E"));
+</script>
+</div>
+</body>
+</html>
