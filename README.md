@@ -16,3 +16,6 @@
 
 
 [‘§¿¿µÿ÷∑](http://http://chenjinya.cn/)
+
+
+The MIT License (MIT)
